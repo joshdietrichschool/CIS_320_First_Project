@@ -11,6 +11,6 @@
     <title>$Title$</title>
   </head>
   <body>
-  $END$
+  <p>Josh D Project Page</p>
   </body>
 </html>
