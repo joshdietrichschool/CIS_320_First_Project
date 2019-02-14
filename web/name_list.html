@@ -69,18 +69,37 @@
             <div class="modal-body">
                 <form id="my-form" name="my-form">
                     <div class="form-group">
-                        <label for="firstName">First Name:</label> <input type="hidden" id="id" name="id" class="form-control"><br>
-                        <input type="text" id="firstName" name="firstName" class="form-control" placeholder="First name"><br>
-                        <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last name"><br>
-                        <input type="email" id="email" name="email" class="form-control" placeholder="Email address"><br>
-                        <input type="number" id="phone" name="phone" class="form-control" placeholder="Phone number"><br>
-                        <input type="date" id="birthday" name="birthday" class="form-control" placeholder="Date of Birth"><br>
+                        <div id="firstNameDiv">
+                            <label for="firstName">First Name:</label> <input type="hidden" id="id" name="id" class="form-control"><br>
+                            <input type="text" id="firstName" name="firstName" class="form-control" placeholder="First name"
+                                aria-describedby="firstNameStatus"><br>
+                        </div>
+                        <div id="lastNameDiv">
+                            <label for="lastName">Last Name:</label><br>
+                            <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last name"
+                                   aria-describedby="lastNameStatus"><br>
+                        </div>
+                        <div id="emailDiv">
+                            <label for="email">Email:</label><br>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Email address"
+                                   aria-describedby="emailStatus"><br>
+                        </div>
+                        <div id="phoneDiv">
+                            <label for="phone">Phone Number:</label><br>
+                            <input type="text" id="phone" name="phone" class="form-control" placeholder="Phone number"
+                                   aria-describedby="phoneStatus"><br>
+                        </div>
+                        <div id="birthdayDiv">
+                            <label for="birthday">Birthday:</label><br>
+                            <input type="date" id="birthday" name="birthday" class="form-control" placeholder="Date of Birth"
+                                   aria-describedby="birthdayStatus"><br>
+                        </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> <button id="saveChanges" type=
-                    "button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="saveChanges" type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
