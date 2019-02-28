@@ -9,14 +9,16 @@ function updateTable() {
             '<td>' + result[0].last + '</td>' +
             '<td>' + result[0].email + '</td>' +
             '<td>' + result[0].phone + '</td>' +
-            '<td>' + result[0].birthday + '</td></tr>');
+            '<td>' + result[0].birthday + '</td>' +
+            '<td><button type=\'button\' name=\'delete\' class=\'deleteButton btn\' value=\'' + result[0].id + '\'>Delete</button></td></tr>');
        for(var i=1; i<result.length; i++) {
            $('#datatable tbody').append('<tr><td>' + result[i].id + '</td>' +
                '<td>' + result[i].first + '</td>' +
                '<td>' + result[i].last + '</td>' +
                '<td>' + result[i].email + '</td>' +
                '<td>' + result[i].phone + '</td>' +
-               '<td>' + result[i].birthday + '</td></tr>');
+               '<td>' + result[i].birthday + '</td>' +
+               '<td><button type=\'button\' name=\'delete\' class=\'deleteButton btn\' value=\'' + result[i].id + '\'>Delete</button></td></tr>');
        }
     });
 }
@@ -72,10 +74,10 @@ var lastName = $('#lastName');
 lastName.on('change', validateLastName);
 
 function validateLastName() {
-    var regex1 = /^[A-Z]+ ?([A-Za-z]+)?$/;
-    var regex2 = /^([A-Z]'[A-Za-z]+)$/;
+    var regex1 = /^([A-Z]([a-z]+)? )?[A-Z][a-z]+$/;
+    var regex2 = /^([A-Z]'[A-Z][a-z]+)$/;
     var lastNameInput = $('#lastName');
-    if(regex1.test(lastNameInput.val()) || regex2.text(lastNameInput.val())) {
+    if(regex1.test(lastNameInput.val()) || regex2.test(lastNameInput.val())) {
         lastNameInput.removeClass('is-invalid');
         lastNameInput.addClass('is-valid');
         console.log("valid last name")
@@ -192,12 +194,21 @@ function saveToDatabase() {
             dataType: 'text'
         });
 
+        console.log('Saving person to database...');
+
+        console.log('Closing modal');
+        $('#myModal').modal('hide');
+
     } else {
         console.log('Not all fields are valid');
     }
-
-    console.log('Saving person to database...');
-
-    console.log('Closing modal');
-    $('#myModal').modal('hide');
 }
+
+function deleteItem(e) {
+    console.log("Delete");
+    console.log(e.target.value);
+}
+
+// $(".deleteButton").on('click', deleteItem);
+
+$(document).on('click', ".deleteButton", deleteItem);
