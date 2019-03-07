@@ -205,10 +205,25 @@ function saveToDatabase() {
 }
 
 function deleteItem(e) {
-    console.log("Delete");
-    console.log(e.target.value);
-}
+    console.log("Deleting person with id: " + e.target.value);
+    var url = 'api/name_list_delete';
 
-// $(".deleteButton").on('click', deleteItem);
+    var response = confirm("Do you want do delete this person?");
+
+    if(response === true) {
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: e.target.value,
+            success: [
+                function (dataFromServer) {
+                    updateTable();
+                }
+            ],
+            contentType: "application/json",
+            dataType: 'text'
+        })
+    }
+}
 
 $(document).on('click', ".deleteButton", deleteItem);
