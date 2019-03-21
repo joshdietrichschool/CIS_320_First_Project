@@ -34,17 +34,22 @@ public class NameListEdit extends HttpServlet {
         BufferedReader reader = request.getReader();
         StringBuilder stringBuilder = new StringBuilder();
         Gson gson = new Gson();
+        boolean hasId = false;
 
         try {
             String line;
             while((line = reader.readLine()) != null) {
                 stringBuilder.append(line).append('\n');
+                if(line.contains("id")) {
+                    hasId = true;
+                }
             }
         } finally {
             reader.close();
         }
 
         Person person = gson.fromJson(stringBuilder.toString(), Person.class);
+        boolean isValid = false;
 
         if(firstNameRegex.matcher(person.getFirst()).find() &&
             (lastNameRegex1.matcher(person.getLast()).find() ||
@@ -52,9 +57,17 @@ public class NameListEdit extends HttpServlet {
             emailRegex.matcher(person.getEmail()).find() &&
             phoneRegex.matcher(person.getPhone()).find() &&
             birthdayRegex.matcher(person.getBirthday()).find()) {
-            PersonDAO.addPerson(person);
+            isValid = true;
         } else {
             System.out.println("Inputs did not match validation, try again.");
+        }
+
+        if(isValid) {
+            if(hasId) {
+                PersonDAO.updatePerson(person);
+            } else {
+                PersonDAO.addPerson(person);
+            }
         }
     }
 

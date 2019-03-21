@@ -10,6 +10,7 @@ function updateTable() {
             '<td>' + result[0].email + '</td>' +
             '<td>' + result[0].phone + '</td>' +
             '<td>' + result[0].birthday + '</td>' +
+            '<td><button type=\'button\' name=\'edit\' class=\'editButton btn\' value=\'' + result[0].id + '\'>Edit</button></td></tr>' +
             '<td><button type=\'button\' name=\'delete\' class=\'deleteButton btn\' value=\'' + result[0].id + '\'>Delete</button></td></tr>');
        for(var i=1; i<result.length; i++) {
            $('#datatable tbody').append('<tr><td>' + result[i].id + '</td>' +
@@ -18,6 +19,7 @@ function updateTable() {
                '<td>' + result[i].email + '</td>' +
                '<td>' + result[i].phone + '</td>' +
                '<td>' + result[i].birthday + '</td>' +
+               '<td><button type=\'button\' name=\'edit\' class=\'editButton btn\' value=\'' + result[i].id + '\'>Edit</button></td></tr>' +
                '<td><button type=\'button\' name=\'delete\' class=\'deleteButton btn\' value=\'' + result[i].id + '\'>Delete</button></td></tr>');
        }
     });
@@ -165,19 +167,33 @@ function saveToDatabase() {
         $('#phone').hasClass('is-valid') &&
         $('#birthday').hasClass('is-valid')) {
 
+        var idVal = $('#id').val();
         var firstNameVal = $('#firstName').val();
         var lastNameVal = $('#lastName').val();
         var emailVal = $('#email').val();
         var phoneVal = $('#phone').val();
         var birthdayVal = $('#birthday').val();
 
-        var jsonObject = {
-            first: firstNameVal,
-            last: lastNameVal,
-            email: emailVal,
-            phone: phoneVal,
-            birthday: birthdayVal
-        };
+        var jsonObject;
+        if(idVal) {
+            jsonObject = {
+                id: idVal,
+                first: firstNameVal,
+                last: lastNameVal,
+                email: emailVal,
+                phone: phoneVal,
+                birthday: birthdayVal
+            };
+        } else {
+            jsonObject = {
+                first: firstNameVal,
+                last: lastNameVal,
+                email: emailVal,
+                phone: phoneVal,
+                birthday: birthdayVal
+            };
+        }
+
         var url = "api/name_list_edit";
 
         $.ajax({
@@ -227,3 +243,19 @@ function deleteItem(e) {
 }
 
 $(document).on('click', ".deleteButton", deleteItem);
+
+function editItem(e) {
+    console.log("Edit: " + e.target.value);
+    var fields = e.target.parentNode.parentNode.querySelectorAll("td");
+
+    $('#id').val(e.target.value);
+    $('#firstName').val(fields[1].innerHTML);
+    $('#lastName').val(fields[2].innerHTML);
+    $('#email').val(fields[3].innerHTML);
+    $('#phone').val(fields[4].innerHTML);
+    $('#birthday').val(fields[5].innerHTML);
+
+    $('#myModal').modal('show');
+}
+
+$(document).on('click', ".editButton", editItem);
